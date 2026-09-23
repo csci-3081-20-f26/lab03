@@ -163,7 +163,7 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 
     Again, we get: `segmentation fault (core dumped)`  Let's debug this in _gdb_ then _run_:
 
-        ````
+    ````
     $ gdb --args ./image_app data/statue.png red
     ...
     (gdb) run
