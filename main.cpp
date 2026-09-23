@@ -14,7 +14,7 @@
 // floating point values between 0-1 (instead of unsigned bytes 0-255).
 class Color {
 public:
-  Color(float red, float green,float blue, float alpha) {
+  Color(float red, float green, float blue, float alpha) {
     r = red;
     g = green;
     b = blue;
@@ -36,28 +36,28 @@ private:
 
 // Updates the red channel only.
 Color red(const Color& color) {
-  return color*Color(1, 0, 0, 1);
+  return color * Color(1, 0, 0, 1);
 }
 
 // Calculates a red color gradient
 Color red_gradient(const Color& color, int x, int width) {
-  return Color(1.0*x/width, color.green(), color.blue(), color.alpha());
+  return Color((1.0 * x) / width, color.green(), color.blue(), color.alpha());
 }
 
 // Sets a pixel value from a color
 void set_pixel_color(unsigned char* pixel, const Color& color) {
-      pixel[0] = color.red()*255;//255*x/width;
-      pixel[1] = color.green()*255;
-      pixel[2] = color.blue()*255;
-      pixel[3] = color.alpha()*255;
+      pixel[0] = color.red() * 255;  // 255 * x / width;
+      pixel[1] = color.green() * 255;
+      pixel[2] = color.blue() * 255;
+      pixel[3] = color.alpha() * 255;
 }
 
 Color get_pixel_color(unsigned char* pixel) {
   return Color(
-        1.0*pixel[0]/255,
-        1.0*pixel[1]/255,
-        1.0*pixel[2]/255,
-        1.0*pixel[3]/255
+        (1.0 * pixel[0]) / 255,
+        (1.0 * pixel[1]) / 255,
+        (1.0 * pixel[2]) / 255,
+        (1.0 * pixel[3]) / 255
       );
 }
 
@@ -67,7 +67,7 @@ void edit(unsigned char* image, int width, int height, int components, const std
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
       // Get the pixel as a byte array
-      unsigned char* pixel = &image[(y*width + x)*components];
+      unsigned char* pixel = &image[(y * width + x) * components];
 
       Color color = get_pixel_color(pixel);
 
@@ -86,7 +86,7 @@ void edit(unsigned char* image, int width, int height, int components, const std
   }
 }
 
-int main(int argc, char**argv) {
+int main(int argc, char** argv) {
   // Confirm there are the correct number of arguments in the command line
   if (argc < 2) {
     std::cout << "Usage: ./image_app <image> <operation>" << std::endl;
@@ -110,8 +110,8 @@ int main(int argc, char**argv) {
   unsigned char testByte = loadedImage[0];
 
   // Copy the image data into a local image buffer and free the image
-  unsigned char image[1228800]; // = Memory is large enough to hold 640x480 images (e.g. statue.png is the largest) with 4 components (RGBA): 640x480*4 = 1228800.
-	std::copy(loadedImage, loadedImage + width*height*components, image); // copy allows us to copy one byte array to another
+  unsigned char image[1'228'800]; // = Memory is large enough to hold 640x480 images (e.g. statue.png is the largest) with 4 components (RGBA): (640x480)*4 = 1,228,800.
+	std::copy(loadedImage, loadedImage + (width * height * components), image); // copy allows us to copy one byte array to another
   stbi_image_free(loadedImage);
 
   // Edit the image based on the operation

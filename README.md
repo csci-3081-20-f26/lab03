@@ -110,7 +110,7 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 
 4. Start a debugging session on an executable file by typing _gdb --args <executable and arguments>_
     ````
-    $ gdb ./image_app dog.png red
+    $ gdb --args ./image_app dog.png red
     ````
 
 5. Once in the debugger session (the prompt will change to (**gdb**)). Then, execute the program with _run_.
@@ -149,8 +149,8 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 9. We can observe that `dog.png` is actually stored in `data/dog.png` from where the program is run.  Let's try loading from that location:
 
     ````
-    $ ./image_app dog.png red
-    $ ./image_app dog.png red_gradient
+    $ ./image_app data/dog.png red
+    $ ./image_app data/dog.png red_gradient
     ````
 
     Indeed, we get see an `output/red.png` and `output/red_gradient.png` image that shows the two different red component edits of the `data/dog.png` image.
@@ -237,7 +237,7 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 
     This is a bug in the code.  When you find, it fix this code.
 
-14. One more to go!  Use _gdb_, _bt_, _up_ and _down_ to fix the following error:
+14. One more to go!  Use _gdb_, _bt_, _up_ and _down_ to find the cause of the following error:
 
     ````
     ./image_app dog.png
@@ -253,6 +253,7 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 | man gdb | to get help on gdb at the unix command level |
 | g++ -g -o program filename.cpp | to compile & link with the debug (-g) option |
 | gdb _ProgramName_ | to execute the debugger on executable _ProgramName_ |
+| gdb --args _ProgramName \[input arguments\]_ | to execute the debugger on executable _ProgramName_, but with the arguments to the program set to _\[input arguments\]_.
 
 
 ### Basic gdb commands -- entered after the (gdb) prompt:
@@ -271,6 +272,7 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 | list | to list the next source lines |
 | list xx,yy | to list sources lines from line xx to line yy |
 | list filename:xx | to list source lines in the specified file starting at line xx |
+| kill | to stop the execution of the program without leaving gdb |
 | quit | to quit gdb and revert to the unix command level |
 | break _functionname_ | to set a breakpoint at the start of a function (set this before typing run) |
 | break classname::functionname | to set a breakpoint at the start of a member function |
@@ -285,9 +287,10 @@ The app we are using has a few bugs worth fixing.  This part of the lab will foc
 | info locals | to show local variables in the current frame |
 | info sources | to list the name of all source files in use |
 | set variable = value | to assign a new value to a specified variable |
+| set args _\[input arguments\]_ | to set the program arguments to specified _\[input arguments\]_. *note*: If you have already started the program, this will NOT change the arguments. You will need to _kill_ the program then _run_ it again. |
 | (return) | to re-execute the previous gdb command; this is particularly useful if the previous gdb command was next or step |
 
-You can also execute most gdb commands by entering only the first letter of the command.
+You can also execute many of these gdb commands by entering only the first letter of the command.
 
 * The original source for this list is [here](https://www.bgsu.edu/arts-and-sciences/computer-science/cs-documentation/using-the-gdb-debugger.html).
 
@@ -300,17 +303,17 @@ Another tutorial: (http://www.cs.cmu.edu/~gilpin/tutorial/)
 
 Search for "gdb tutorial" on the web: (http://lmgtfy.com/?q=gdb+tutorial)
 
-    If your output does not look like the above, you will need to continue debugging your program to get the correct output.  Most likely, there are other bugs in the program besides segfaults.  Consider the following common errors to look for:
+If your output does not look like the above, you will need to continue debugging your program to get the correct output.  Most likely, there are other bugs in the program besides segfaults. 
+<!-- Consider the following common errors, whilst many would not be applicable in this scenario, they may be the cause in future assignments:
+ - **Virtual Methods** - Check to see whether methods are polymorphic.  Should some of the methods be declared virtual.\
+ - **Arrays (Required - implement this change)** - Using double* arrays as arguments and return types is often not safe.  Bad things usually do happen!  For example is hard to tell how big the array is and we might accidently overwrite a pointer.  Change these into a std::vector<double> or user defined class (e.g. Vector3) instead of double*.  An added bonus of using std::vector<double> is you can get the size of the array.
+ - **Virtual Destructors** - If a base class does not have a virtual destructor, subclass destructors will not be called.
+ - **Referencing Parameters** - It is possible to send in a pointer or reference into a method or constructor and set the memory address, however, that parameter may go out of scope or get deleted elsewhere in the program.
+ - **Unique Pointers** - If you are using dynamic memory, it's often a good idea to use a unique_ptr<type> instead of _new_ and _delete_ if possible.  This way, the pointer will be deleted by the unique_ptr and there will not be a memory leak.
+ - **new / delete** - Remember anytime we add an object to the heap with _new_ we must also _delete_ it.  Also, be sure to use the correct forms of new and delete.  For example if you create an array with _new_ be sure to use _delete[]_ when you delete it.
+ - **Casting** - Be sure to use static_cast<>, dynamic_cast<>, and reinterpret_cast<> correctly.
 
-     - **Virtual Methods** - Check to see whether methods are polymorphic.  Should some of the methods be declared virtual.
-     - **Arrays (Required - implement this change)** - Using double* arrays as arguments and return types is often not safe.  Bad things usually do happen!  For example is hard to tell how big the array is and we might accidently overwrite a pointer.  Change these into a std::vector<double> or user defined class (e.g. Vector3) instead of double*.  An added bonus of using std::vector<double> is you can get the size of the array.
-     - **Virtual Destructors** - If a base class does not have a virtual destructor, subclass destructors will not be called.
-     - **Referencing Parameters** - It is possible to send in a pointer or reference into a method or constructor and set the memory address, however, that parameter may go out of scope or get deleted elsewhere in the program.
-     - **Unique Pointers** - If you are using dynamic memory, it's often a good idea to use a unique_ptr<type> instead of _new_ and _delete_ if possible.  This way, the pointer will be deleted by the unique_ptr and there will not be a memory leak.
-     - **new / delete** - Remember anytime we add an object to the heap with _new_ we must also _delete_ it.  Also, be sure to use the correct forms of new and delete.  For example if you create an array with _new_ be sure to use _delete[]_ when you delete it.
-     - **Casting** - Be sure to use static_cast<>, dynamic_cast<>, and reinterpret_cast<> correctly.
-	
-     **Note: You may fix these errors however you want.  Perhaps consider adding more polymorphic methods or changing method signitures (return types / parameters).**
+ **Note: You may fix these errors however you want.  Perhaps consider adding more polymorphic methods or changing method signitures (return types / parameters).** -->
 
 
 ## Part B - Creating Classes
@@ -345,9 +348,9 @@ Here we use a pointer `pixel` which points to a specific four byte array for the
 
 Notice that in _main.cpp_ we use the Color class, which is also defined in _main.cpp_.  The following milestones will help us understand how to create classes following a header (*.h) and implementation (*.cpp) standard.  Header files contain the interface or prototypes of a class and the _cpp_ files contain the actual implementation that is compiled.  Below are the milestones:
 
-* Milestone 1 - Move the Color class (into separate header/implementation files)
-* Milestone 2 - Create the Image class
-* Milestone 3 - Create the ImageEditor class.
+* [Milestone 1](#milestone-1---move-the-color-class) - Move the Color class (into separate header/implementation files)
+* [Milestone 2](#milestone-2---create-the-image-class) - Create the Image class
+* [Milestone 3](#milestone-3---create-the-imageeditor-class) - Create the ImageEditor class.
 
 ### Milestone 1 - Move the Color class
 
@@ -385,7 +388,7 @@ The header guards look for need a unique identifier (i.g. `COLOR_H_`).  If it is
     ````
     class Color {
         ...
-        Color(float red, float green,float blue, float alpha);
+        Color(float red, float green, float blue, float alpha);
         ...
     };
     ````
@@ -400,6 +403,8 @@ The header guards look for need a unique identifier (i.g. `COLOR_H_`).  If it is
         a = alpha;
     }
     ````
+
+  Seperating the interface (_color.h_) from the implementation (_color.cpp_) means that any code that includes _color.h_ only needs to know **WHAT** `Color` does (they see that Color has a constructor which takes four floats: `red`, `green`, `blue`, and `alpha`), and not **HOW** it does it (the constructor sets the private members `r`, `g`, `b`, and `a` to `red`, `green`, `blue`, and `alpha` respectively). This is good practice to maintain for when you create more complex classes.
 
 6. Build and run the program.  It should execute as in Part A.
 
@@ -426,7 +431,7 @@ Create a new `Image` class including the interface (image.h) and the implementat
 
 We highly recommend that you refer to main.cpp to help you create and save images.  It is also recommended that you manage your own image buffer similar to image.cc rather than using the data from stb_image.  This is so that you can create your own images using the `Image(width, height)` constructor that does not rely on stb_image.
 
-*Note:* If done correctly, it is nice to move all the `stb_image*.h` files into `image.cpp` so that other files are not dependent on these libraries.
+*Note:* If done correctly, it is nice to move all the `#include stb_image*.h` into `image.cpp` so that other files are not dependent on these libraries. Make sure to move any `#define`s directly before the `#include`s alongside them when you move them into `image.cpp`.
 
 #### Guidelines for building your image class
 
@@ -434,7 +439,7 @@ The following are guidelines for implementing your image class.  We will be revi
 
  * **Classes / Constructors / Methods** - You have freedom to design these image classes and any other class as you like.  We are interested in how you would solve the problem.
  * **Memory Management** - For now we can assume that you are storing a byte array of a fixed size (e.g. `unsigned char image[1228800]`).  When we discuss dynamic memory, we create images that can adapt to other sizes.
- * **Efficient** - Write as efficient and safe code.  For example, be sure to use a const reference wherever possible to save space on the stack and avoid copying too much information.  In fact, you may want to go back and modify your Vector3 class to include const references whenever you pass a value that is larger than a pointer.  
+ * **Efficient** - Write as efficient and safe code.  For example, be sure to use a const reference wherever possible to save space on the stack and avoid copying too much information. <!-- In fact, you may want to go back and modify your Vector3 class to include const references whenever you pass a value that is larger than a pointer. -->
  * **Useful** - After creating your class, you add other methods to accomplish different task if you would like.
 
 ___
