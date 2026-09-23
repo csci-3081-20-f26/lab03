@@ -9,8 +9,7 @@
 5. How to load, modify, and save an image.
 6. How to copy bytes of memory.
 7. How to design a cohesive image class.
-8. How to load, modify, copy, and save images.
-9. Simple image editing techniques.
+8. Simple image editing techniques.
 
 ### What's in lab03
 
