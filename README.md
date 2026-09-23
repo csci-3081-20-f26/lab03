@@ -458,17 +458,6 @@ Create a new `ImageEditor` class including the interface (image_editor.h) and th
    * `Edit(Image&, operation)`- Move the functionality from the `edit(...)` function into the image editor.
    * You may create other functions as well if they are helpful.
 
-
-
-#### Guidelines for building your image class
-
-The following are guidelines for implementing your image class.  We will be reviewing your classes to make sure these are followed:
-
- * **Classes / Constructors / Methods** - You have freedom to design these image classes and any other class as you like.  We are interested in how you would solve the problem.
- * **Memory Management** - For now we can assume that you are storing a byte array of a fixed size (e.g. `unsigned char image[1228800]`).  When we discuss dynamic memory, we create images that can adapt to other sizes.
- * **Efficient** - Write as efficient and safe code.  For example, be sure to use a const reference wherever possible to save space on the stack and avoid copying too much information.  In fact, you may want to go back and modify your Vector3 class to include const references whenever you pass a value that is larger than a pointer.  
- * **Useful** - After creating your class, you add other methods to accomplish different task if you would like.
-
 ___
 For **Milestone 3** have a TA verify the program works and the ImageEditor class is coded in the header and implementation files correctly.
 ___
