@@ -88,7 +88,7 @@ _Note_: When we enable debugging, the resulting application may not be optimized
 
 We are now ready to start this lab.
 
-### Debugging with GDB
+## Part A - Debugging with GDB
 
 The app we are using has a few bugs worth fixing.  This part of the lab will focus on using GDB to interrogate and fix the bugs.
 
@@ -313,15 +313,17 @@ Search for "gdb tutorial" on the web: (http://lmgtfy.com/?q=gdb+tutorial)
      **Note: You may fix these errors however you want.  Perhaps consider adding more polymorphic methods or changing method signitures (return types / parameters).**
 
 
+## Part B - Creating Classes
+
 ### Modifying an Image
 
-Open up `main.cpp` and navigate to the `main(...)` function.   It uses stb_image and stb_image_write to load in an image and save it.    Run the program:
+Open up `main.cpp` and navigate to the `main(...)` function.  It uses stb_image and stb_image_write to load in an image and save it.  Run the program:
 
 ```
-% ./image_app
+% ./image_app data/status.png red_gradient
 ```
 
-**_What just happened?_** You should see an image, `data/output.png`, which is a color modification of `data/input.png`.  Here we are changing the red value of the image from left to right:
+**_What just happened?_** You should see an image, `data/red_gradient.png`, which is a color modification of `data/statue.png`.  Here we are changing the red value of the image from left to right.  The code is below is a simplified version of the _edit(...)_ function, which employs multiple operations:
 
 ```c++
   // Loop through the image pixels and modify values
@@ -341,9 +343,138 @@ Open up `main.cpp` and navigate to the `main(...)` function.   It uses stb_image
 
 Here we use a pointer `pixel` which points to a specific four byte array for the (x,y) location in the 2D image (stored as a 1D array indexed by `(y*width+x)*4`).  The number 4 represents the number of components (RGBA).
 
-Change the program to edit the RGBA pixel values and a create new image (output.png) based on your original image (input.png).  We want to see fun and interesing renditions of your original image.  You should prototype interesting and creative modifications.  You will submit your original and modified image to Discord (see below).
+Notice that in _main.cpp_ we use the Color class, which is also defined in _main.cpp_.  The following milestones will help us understand how to create classes following a header (*.h) and implementation (*.cpp) standard.  Header files contain the interface or prototypes of a class and the _cpp_ files contain the actual implementation that is compiled.  Below are the milestones:
 
-### Add Changes to Repo Locally and On Server
+* Milestone 1 - Move the Color class (into separate header/implementation files)
+* Milestone 2 - Create the Image class
+* Milestone 3 - Create the ImageEditor class.
+
+### Milestone 1 - Move the Color class
+
+We will start by creating the following files:
+ * _color.h_ - Contains the interface of the color class.
+ * _color.cpp_ - Contains the implementation of the color class.
+
+The interface contains the definition of the class, but not the details of the implementation.  You can contain implementation in the header.  Often, getter and setter implementations are contained in the header file.  Follow the steps below to move the Color class:
+
+1. Create header guards to ensure that the Color class is not defined multiple times.  Edit _color.h_ with the following:
+````
+#ifndef COLOR_H_
+#define COLOR_H_
+
+// TODO: Copy Color class here
+
+#endif
+````
+
+The header guards look for need a unique identifier (i.g. `COLOR_H_`).  If it is not found, it will be defined and include the code.  If the identifier is already defined, the compiler will ignore the code inside of the scope of the file.
+
+2. In both the _main.cpp_ and _image.cpp_ files, include _color.h_:
+
+````
+#include "color.h"
+````
+
+3. Copy the Color class into _color.h_ so that it replaces the `TODO` above.  Remove the color class from _main.cpp_.
+
+4. Build and run the program.  It should execute as in Part A.
+
+5. Now we need to move the implementation from the header to the implementation file (_color.cpp_).  Let's start by moving the constructor:
+
+   In _color.h_, remove the implementation and use the constructor's prototype:
+    ````
+    class Color {
+        ...
+        Color(float red, float green,float blue, float alpha);
+        ...
+    };
+    ````
+
+    In _color.cpp_, add the implementation, scoped by the `Color` class with `Color::`
+
+    ````
+    Color::Color(float red, float green,float blue, float alpha) {
+        r = red;
+        g = green;
+        b = blue;
+        a = alpha;
+    }
+    ````
+
+6. Build and run the program.  It should execute as in Part A.
+
+7. For each other method, keep the prototype in _color.h_ and move the implementation to the _color.cpp_
+
+8. Build and run the program.  It should execute as in Part A.
+
+___
+For **Milestone 1** have a TA verify the program works and the color class has been moved to the header and implementation files correctly.
+___
+
+
+### Milestone 1 - Move the Color class
+
+We will start by creating the following files:
+ * _color.h_ - Contains the interface of the color class.
+ * _color.cpp_ - Contains the implementation of the color class.
+
+The interface contains the definition of the class, but not the details of the implementation.  You can contain implementation in the header.  Often, getter and setter implementations are contained in the header file.  Follow the steps below to move the Color class:
+
+1. Create header guards to ensure that the Color class is not defined multiple times.  Edit _color.h_ with the following:
+````
+#ifndef COLOR_H_
+#define COLOR_H_
+
+// TODO: Copy Color class here
+
+#endif
+````
+
+The header guards look for need a unique identifier (i.g. `COLOR_H_`).  If it is not found, it will be defined and include the code.  If the identifier is already defined, the compiler will ignore the code inside of the scope of the file.
+
+2. In both the _main.cpp_ and _image.cpp_ files, include _color.h_:
+
+````
+#include "color.h"
+````
+
+3. Copy the Color class into _color.h_ so that it replaces the `TODO` above.  Remove the color class from _main.cpp_.
+
+4. Build and run the program.  It should execute as in Part A.
+
+5. Now we need to move the implementation from the header to the implementation file (_color.cpp_).  Let's start by moving the constructor:
+
+   In _color.h_, remove the implementation and use the constructor's prototype:
+    ````
+    class Color {
+        ...
+        Color(float red, float green,float blue, float alpha);
+        ...
+    };
+    ````
+
+    In _color.cpp_, add the implementation, scoped by the `Color` class with `Color::`
+
+    ````
+    Color::Color(float red, float green,float blue, float alpha) {
+        r = red;
+        g = green;
+        b = blue;
+        a = alpha;
+    }
+    ````
+
+6. Build and run the program.  It should execute as in Part A.
+
+7. For each other method, keep the prototype in _color.h_ and move the implementation to the _color.cpp_
+
+8. Build and run the program.  It should execute as in Part A.
+
+___
+For **Milestone 1** have a TA verify the program works and the color class has been moved to the header and implementation files correctly.
+___
+
+### Add Changes to Repo Locally and On Serer
 
 You need to _stage_ all changes to the repository, which prepares those items to be permanently part of the repository. 
 When you _commit_ those changes, they are saved to your local repository, which lives in your cselabs account (or your
