@@ -58,7 +58,8 @@
 ### Goal
 
 <hr>
-  **The primary goal of this lab is to introduce C++ debugging and to learn how to build C++ classes.**
+
+**The primary goal of this lab is to introduce C++ debugging and to learn how to build C++ classes.**
 <hr>
 
 ### Prerequisites
@@ -76,7 +77,7 @@ Depending on the system, environment being used, or customized compiler options 
 
 ```
 CXX=g++
-CXXFLAGS = -std=c++11 -g
+CXXFLAGS = -std=c++17 -g
 ```
 
 __What does all that mean?__
@@ -441,7 +442,7 @@ For **Milestone 2** have a TA verify the program works and the Image class is co
 ___
 
 
-### Milestone 2 - Create the ImageEditor class
+### Milestone 3 - Create the ImageEditor class
 
 Create a new `ImageEditor` class including the interface (image_editor.h) and the implementation (image_editor.cpp).  This image editor should implement the other functionality in main, so that main(...) can be simple and would only need to contain the following:
 
