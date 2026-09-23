@@ -414,7 +414,7 @@ ___
 
 ### Milestone 2 - Create the Image class
 
-Create a new `Image` class including the interface (image.h) and the implementation (image.cc).  This image class should be able to do the following:
+Create a new `Image` class including the interface (image.h) and the implementation (image.cpp).  This image class should be able to do the following:
  * **Constructors**
    * `Image(width, height)` - Creates a "blank" image of a given width and height.
    * `Image(filename)` - Load an image from the hard drive if a string (or character array) is passed into the constructor.  **Hint:** Use stb_image (see _main.cpp_ in Part A).
@@ -424,7 +424,9 @@ Create a new `Image` class including the interface (image.h) and the implementat
    * `GetPixel(x,y)` - method that returns a pixel value (it is up to you how you want to represent a pixel.  Perhaps it could return a color object or an array).
    * `SetPixel(x,y,pixel)`- method that sets a pixel value at a place on the image.  Again, it is up to you how you represent these objects.  There is freedom here.
 
-We highly recommend that you refer to image.cc (from Lab03) to help you create and save images.  It is also recommended that you manage your own image buffer similar to image.cc rather than using the data from stb_image.  This is so that you can create your own images using the `Image(width, height)` constructor that does not rely on stb_image.
+We highly recommend that you refer to main.cpp to help you create and save images.  It is also recommended that you manage your own image buffer similar to image.cc rather than using the data from stb_image.  This is so that you can create your own images using the `Image(width, height)` constructor that does not rely on stb_image.
+
+*Note:* If done correctly, it is nice to move all the `stb_image*.h` files into `image.cpp` so that other files are not dependent on these libraries.
 
 #### Guidelines for building your image class
 
@@ -437,4 +439,36 @@ The following are guidelines for implementing your image class.  We will be revi
 
 ___
 For **Milestone 2** have a TA verify the program works and the Image class is coded in the header and implementation files correctly.
+___
+
+
+### Milestone 2 - Create the ImageEditor class
+
+Create a new `ImageEditor` class including the interface (image_editor.h) and the implementation (image_editor.cpp).  This image editor should implement the other functionality in main, so that main(...) can be simple and would only need to contain the following:
+
+  ````
+  // Use image editor to edit the image
+  Image image(input);
+  ImageEditor editor;
+  editor.edit(image, operation);
+  image.save(output);
+  ````
+
+ * **Methods**
+   * `Edit(Image&, operation)`- Move the functionality from the `edit(...)` function into the image editor.
+   * You may create other functions as well if they are helpful.
+
+
+
+#### Guidelines for building your image class
+
+The following are guidelines for implementing your image class.  We will be reviewing your classes to make sure these are followed:
+
+ * **Classes / Constructors / Methods** - You have freedom to design these image classes and any other class as you like.  We are interested in how you would solve the problem.
+ * **Memory Management** - For now we can assume that you are storing a byte array of a fixed size (e.g. `unsigned char image[1228800]`).  When we discuss dynamic memory, we create images that can adapt to other sizes.
+ * **Efficient** - Write as efficient and safe code.  For example, be sure to use a const reference wherever possible to save space on the stack and avoid copying too much information.  In fact, you may want to go back and modify your Vector3 class to include const references whenever you pass a value that is larger than a pointer.  
+ * **Useful** - After creating your class, you add other methods to accomplish different task if you would like.
+
+___
+For **Milestone 3** have a TA verify the program works and the ImageEditor class is coded in the header and implementation files correctly.
 ___
