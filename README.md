@@ -62,10 +62,9 @@ The primary goal of this lab is to introduce C++ debugging and to learn how to b
 ---
 ### Prerequisites
 
-We are going to use header only libraries for this lab.  Header only libraries are nice because you can place them directly in your code without having to link them.  In this case we will use stb_image and stb_image_write.  These are found at <https://github.com/nothings/> along with several other libraries.  Download the following header files and put them in the lab folder. You can either click the link and download the file, or use curl to download it directly into the folder
-
-- stb_image.h <https://github.com/nothings/stb/blob/master/stb_image.h> or curl -O \<url\>
-- stb_image_write.h <https://github.com/nothings/stb/blob/master/stb_image_write.h> or curl -O \<url\>
+We are going to use header only libraries for this lab.  Header only libraries are nice because you can place them directly in your code without having to link them.  In this case we will use stb_image and stb_image_write.  These are found at <https://github.com/nothings/> along with several other libraries.  Download the following header files and put them in the lab folder. 
+- stb_image.h <https://github.com/nothings/stb/blob/master/stb_image.h> 
+- stb_image_write.h <https://github.com/nothings/stb/blob/master/stb_image_write.h>
 
 In case you are interested, here are many other useful header file libraries for C++: <https://github.com/nothings/single_file_libs>
 
