@@ -71,7 +71,7 @@ In case you are interested, here are many other useful header file libraries for
 ---
 ### Configuring Debugging
 
-Depending on the system, environment being used, or customized compiler options it is common to configure your makefile based on the specific machine.  For example, we may want to specify the specifically compiler that should be used.  We often use variables to accomplish this as we have seen in lab02.  Notice the top of the Makefile provided.  In order to compile the code so that it can be run inside the debugger, we set a flag in the Makefile. For each of the compilation statements in the makefile, we nadd the `-g` flag.  We can do this by adding -g to CXXFLAGS to tell the compiler to generate debug code. For example:
+Depending on the system, environment being used, or customized compiler options it is common to configure your makefile based on the specific machine.  For example, we may want to specify the specific compiler that should be used.  We often use variables to accomplish this as we have seen in lab02.  Notice the top of the Makefile provided.  In order to compile the code so that it can be run inside the debugger, we set a flag in the Makefile. For each of the compilation statements in the makefile, we add the `-g` flag.  We can do this by adding -g to CXXFLAGS to tell the compiler to generate debug code. For example:
 
 ```
 CXX=g++
@@ -270,7 +270,7 @@ Open up `main.cpp` and navigate to the `main(...)` function.  It uses stb_image 
 % ./image_app data/statue.png red_gradient
 ```
 
-**_What just happened?_** You should see an image, `data/red_gradient.png`, which is a color modification of `data/statue.png`.  Here we are changing the red value of the image from left to right.  The code is below is a simplified version of the _edit(...)_ function, which employs multiple operations:
+**_What just happened?_** You should see an image, `data/red_gradient.png`, which is a color modification of `data/statue.png`.  Here we are changing the red value of the image from left to right.  The code below is a simplified version of the _edit(...)_ function, which employs multiple operations:
 
 ```c++
   // Loop through the image pixels and modify values
