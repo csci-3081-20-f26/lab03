@@ -4,7 +4,7 @@
 
 ## Goal
 
-The primary goal of this lab is to introduce C++ debugging and to learn how to build C++ classes. You'll debug four crashing bugs in a provided image-editing program using gdb, then refactor the code into three classes — `Color`, `Image`, and `ImageEditor` — each split into header and implementation files.
+The primary goal of this lab is to introduce C++ debugging and to learn how to build C++ classes. You'll debug bugs in a provided image-editing program using gdb, then refactor the code into three classes, each split into header and implementation files.
 
 ## What You Will Learn
 
